@@ -26,6 +26,12 @@ TextureImporter:
   - first:
       213: -2615596019402466097
     second: menuButtons_7
+  - first:
+      213: 1478044937784890903
+    second: menuButtons_8
+  - first:
+      213: 7575878238149892078
+    second: menuButtons_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -214,8 +220,8 @@ TextureImporter:
       name: menuButtons_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 68
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -235,7 +241,7 @@ TextureImporter:
       name: menuButtons_5
       rect:
         serializedVersion: 2
-        x: 17
+        x: 0
         y: 0
         width: 16
         height: 16
@@ -256,7 +262,7 @@ TextureImporter:
       name: menuButtons_6
       rect:
         serializedVersion: 2
-        x: 34
+        x: 17
         y: 0
         width: 16
         height: 16
@@ -277,7 +283,7 @@ TextureImporter:
       name: menuButtons_7
       rect:
         serializedVersion: 2
-        x: 51
+        x: 34
         y: 0
         width: 16
         height: 16
@@ -290,6 +296,48 @@ TextureImporter:
       bones: []
       spriteID: fcc1793474983bbd0800000000000000
       internalID: -2615596019402466097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: menuButtons_8
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7169bb63a02138410800000000000000
+      internalID: 1478044937784890903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: menuButtons_9
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee7598e6e1de22960800000000000000
+      internalID: 7575878238149892078
       vertices: []
       indices: 
       edges: []

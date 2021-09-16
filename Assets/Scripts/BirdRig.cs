@@ -11,11 +11,13 @@ public class BirdRig : MonoBehaviour
     [SerializeField] private float landingTime = 2.0f;
     [SerializeField] private float landedTimerMin = 0.25f;
     [SerializeField] private float landedTimerMax = 2.0f;
+    [SerializeField] private float minimumTime = 5.0f;
 
     private bool landing = true;
     private bool landed = false;
     private float landingTimer;
     private float landedTimer;
+    private float minimumTimer;
 
     private Animator birdAnimator;
 
@@ -23,6 +25,7 @@ public class BirdRig : MonoBehaviour
     void Start()
     {
         landingTimer = landingTime;
+        minimumTimer = minimumTime;
         birdAnimator = GetComponentInChildren<Animator>();
         birdAnimator.SetBool("BirdFly", true);
         landedTimer = Random.Range(landedTimerMin, landedTimerMax);
@@ -67,6 +70,7 @@ public class BirdRig : MonoBehaviour
 
         if (landedTimer > 0)
         {
+            minimumTimer -= Time.deltaTime;
             landedTimer -= Time.deltaTime;
         }
         else
@@ -78,7 +82,16 @@ public class BirdRig : MonoBehaviour
     public void ResetLandedTimer()
     {
         landedTimer = Random.Range(landedTimerMin, landedTimerMax);
-        var birdAction = Random.Range(0, 10);
+        var birdAction = 0;
+        if (minimumTimer > 0)
+        {
+            birdAction = Random.Range(0, 9);
+        }
+        else
+        {
+            birdAction = Random.Range(0, 10);
+        }
+
         switch (birdAction)
         {
             case 0:

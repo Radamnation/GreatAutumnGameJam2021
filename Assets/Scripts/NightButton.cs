@@ -9,6 +9,7 @@ public class NightButton : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Sprite[] mySprites;
     [SerializeField] private string myLabel;
+    [SerializeField] private AudioClip clickSFX;
 
     private SpriteRenderer mySpriteRenderer;
 
@@ -69,6 +70,7 @@ public class NightButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioSource.PlayClipAtPoint(clickSFX, Camera.main.transform.position);
         //var nightButtons = FindObjectsOfType<NightButton>();
         //foreach (NightButton nightButton in nightButtons)
         //{

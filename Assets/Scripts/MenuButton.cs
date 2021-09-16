@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class MenuButton : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Sprite[] mySprites;
     [SerializeField] private string myLabel;
+    [SerializeField] private AudioClip clickSFX;
 
     private SpriteRenderer mySpriteRenderer;
 
@@ -63,6 +65,7 @@ public class MenuButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        AudioSource.PlayClipAtPoint(clickSFX, Camera.main.transform.position);
         //var menuButtons = FindObjectsOfType<MenuButton>();
         //foreach (MenuButton menuButton in menuButtons)
         //{
@@ -77,6 +80,7 @@ public class MenuButton : MonoBehaviour
                 Debug.Log("Let's go back to main menu");
                 break;
             case 1:
+                // TO DO, ADD A CONFIRMATION BEFORE RESETING
                 FindObjectOfType<GameManager>().ResetCarving();
                 break;
             case 2:
@@ -85,6 +89,13 @@ public class MenuButton : MonoBehaviour
             case 3:
                 // TO DO
                 Debug.Log("Let's take a picture");
+                FindObjectOfType<GameManager>().TakePicture();
+                // ScreenCapture.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + "-Carving Simulator.png");
+                // UnityEditor.AssetDatabase.Refresh();
+                // Screen.SetResolution(16, 9, false);
+                break;
+            case 4:
+                FindObjectOfType<GameManager>().StartHelpMenu();
                 break;
         }
     }

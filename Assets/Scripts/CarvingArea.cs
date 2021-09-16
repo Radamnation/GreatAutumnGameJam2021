@@ -18,7 +18,11 @@ public class CarvingArea : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        FindObjectOfType<Player>().Transparency(0.25f);
+        if (!FindObjectOfType<GameManager>().NightMode &&
+            FindObjectOfType<GameManager>().CurrentCarvingTool != CarvingTool.NONE)
+        {
+            FindObjectOfType<Player>().Transparency(0.25f);
+        }
     }
 
     private void OnMouseExit()
