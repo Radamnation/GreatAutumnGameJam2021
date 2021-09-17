@@ -25,7 +25,7 @@ public class MenuButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Reinitialize()
@@ -59,7 +59,7 @@ public class MenuButton : MonoBehaviour
     {
         transform.position += offset;
 
-        var toolTip = FindObjectOfType<Player>().GetComponentInChildren<Text>();
+        var toolTip = FindObjectOfType<Player>().ToolTip;
         toolTip.enabled = false;
     }
 
@@ -76,26 +76,19 @@ public class MenuButton : MonoBehaviour
         switch (id)
         {
             case 0:
-                // TO DO
-                Debug.Log("Let's go back to main menu");
+                FindObjectOfType<GameManager>().BackToHomeScreen();
                 break;
             case 1:
-                // TO DO, ADD A CONFIRMATION BEFORE RESETING
-                FindObjectOfType<GameManager>().ResetCarving();
+                FindObjectOfType<GameManager>().AskResetCarving();
                 break;
             case 2:
                 FindObjectOfType<GameManager>().ChangeDayNight();
                 break;
             case 3:
-                // TO DO
-                Debug.Log("Let's take a picture");
-                FindObjectOfType<GameManager>().TakePicture();
-                // ScreenCapture.CaptureScreenshot(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + "-Carving Simulator.png");
-                // UnityEditor.AssetDatabase.Refresh();
-                // Screen.SetResolution(16, 9, false);
+                FindObjectOfType<GameManager>().ShowCameraAim();
                 break;
             case 4:
-                FindObjectOfType<GameManager>().StartHelpMenu();
+                FindObjectOfType<HelpMenu>().StartHelpMenu();
                 break;
         }
     }

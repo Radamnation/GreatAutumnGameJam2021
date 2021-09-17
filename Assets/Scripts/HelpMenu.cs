@@ -48,7 +48,7 @@ public class HelpMenu : MonoBehaviour
         {
             helpScreens[2].gameObject.SetActive(false);
             myCollider2D.enabled = false;
-            FindObjectOfType<GameManager>().EndHelpMenu();
+            // FindObjectOfType<GameManager>().EndHelpMenu();
         }
     }
 }

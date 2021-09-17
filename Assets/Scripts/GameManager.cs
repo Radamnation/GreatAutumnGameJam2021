@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum CarvingTool { NONE, PEN, ERASER, RAZOR, KNIFE, SAW}
 
@@ -22,8 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RandomEvent nightEvents;
 
     [SerializeField] private float musicVolume = 0.25f;
-    [SerializeField] private AudioSource dayMusic;
-    [SerializeField] private AudioSource nightMusic;
+    private AudioSource dayMusic;
+    private AudioSource nightMusic;
+
+    [SerializeField] private GameObject dayCancelMenu;
+    [SerializeField] private GameObject nightCancelMenu;
 
     private CarvingTool currentCarvingTool = CarvingTool.NONE;
     [SerializeField] private bool nightMode = false;
@@ -36,9 +40,13 @@ public class GameManager : MonoBehaviour
     private float currentNightVolume = 0f;
     private float targetNightVolume = 0.25f;
 
+    private Player myPlayer;
+
     public CarvingTool CurrentCarvingTool { get => currentCarvingTool; set => currentCarvingTool = value; }
     public bool NightMode { get => nightMode; set => nightMode = value; }
 
+    [SerializeField] private GameObject cameraAim;
+    [SerializeField] private GameObject cameraFlash;
     [SerializeField] private SpriteRenderer pictureTexture;
     [SerializeField] private RectTransform targetRect;
     [SerializeField] private GameObject pictureFrame;
@@ -54,6 +62,28 @@ public class GameManager : MonoBehaviour
         pictureFrame.SetActive(false);
         // new Texture2D((int) pictureTexture.sprite.textureRect.width, (int) pictureTexture.sprite.textureRect.height, TextureFormat.RGB24, false);
         // border = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+        dayCancelMenu.SetActive(false);
+        nightCancelMenu.SetActive(false);
+        cameraAim.SetActive(false);
+        myPlayer = FindObjectOfType<Player>();
+        dayMusic = FindObjectOfType<MusicManager>().DayMusic;
+        nightMusic = FindObjectOfType<MusicManager>().NightMusic;
+    }
+
+    public void BackToHomeScreen()
+    {
+        FindObjectOfType<MusicManager>().ResetMusic();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void ShowCameraAim()
+    {
+        cameraAim.SetActive(true);
+    }
+
+    public void HideCameraAim()
+    {
+        cameraAim.SetActive(false);
     }
 
     public void TakePicture()
@@ -67,7 +97,7 @@ public class GameManager : MonoBehaviour
         
         Camera.main.orthographicSize = 65;
         pictureFrame.SetActive(true);
-        FindObjectOfType<Player>().enabled = false;
+        myPlayer.gameObject.SetActive(false);
         //var corners = new Vector3[4];
         //targetRect.GetWorldCorners(corners);
         //var bl = RectTransformUtility.WorldToScreenPoint(_camera, corners[0]);
@@ -101,13 +131,29 @@ public class GameManager : MonoBehaviour
             screencap.ReadPixels(new Rect(bl.x, bl.y, width, height), 0, 0);
             screencap.Apply();
 
-            string filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + "-Carving Simulator.png";
-            byte[] bytes = screencap.EncodeToPNG();
+            int targetWidth = 520;
+            int targetHeight = 500;
+
+            Texture2D result = new Texture2D(targetWidth, targetHeight, screencap.format, true);
+            Color[] rpixels = result.GetPixels(0);
+            float incX = ((float)1 / screencap.width) * ((float)screencap.width / targetWidth);
+            float incY = ((float)1 / screencap.height) * ((float)screencap.height / targetHeight);
+            for (int px = 0; px < rpixels.Length; px++)
+            {
+                rpixels[px] = screencap.GetPixelBilinear(incX * ((float)px % targetWidth),
+                                  incY * ((float)Mathf.Floor(px / targetWidth)));
+            }
+            result.SetPixels(rpixels, 0);
+            result.Apply();
+
+            string filename = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + "-Pumpkin Planner 2021.png";
+            byte[] bytes = result.EncodeToPNG();
             File.WriteAllBytes(filename, bytes);
             Camera.main.orthographicSize = 40;
             pictureFrame.SetActive(false);
-            FindObjectOfType<Player>().enabled = true;
+            myPlayer.gameObject.SetActive(true);
             shot = false;
+            Instantiate(cameraFlash);
         }
     }
 
@@ -132,6 +178,11 @@ public class GameManager : MonoBehaviour
 
     public void ChangeDayNight()
     {
+        if (dayMusic == null || nightMusic == null)
+        {
+            dayMusic = FindObjectOfType<MusicManager>().DayMusic;
+            nightMusic = FindObjectOfType<MusicManager>().NightMusic;
+        }
         //if (!Input.GetKeyDown(KeyCode.L)) return;
 
         if (!nightMode)
@@ -267,6 +318,30 @@ public class GameManager : MonoBehaviour
         dayButtons.MoveIn(fadeTransitionTime);
 
         yield return new WaitForSeconds(fadeTransitionTime);
+    }
+
+    public void AskResetCarving()
+    {
+        if (!nightMode)
+        {
+            dayCancelMenu.SetActive(true);
+        }
+        else if (nightMode)
+        {
+            nightCancelMenu.SetActive(true);
+        }
+    }
+
+    public void CancelReset()
+    {
+        if (!nightMode)
+        {
+            dayCancelMenu.SetActive(false);
+        }
+        else if (nightMode)
+        {
+            nightCancelMenu.SetActive(false);
+        }
     }
 
     public void ResetCarving()

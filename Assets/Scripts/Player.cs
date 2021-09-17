@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Sprite[] mySprites;
+    [SerializeField] private Text toolTip;
 
     private SpriteRenderer mySpriteRenderer;
+
+    public Text ToolTip { get => toolTip; set => toolTip = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +27,7 @@ public class Player : MonoBehaviour
     private void UpdatePosition()
     {
         var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var intMousePosition = new Vector3Int(Mathf.RoundToInt(mousePosition.x), Mathf.RoundToInt(mousePosition.y), 0);
+        var intMousePosition = new Vector3Int(Mathf.RoundToInt(mousePosition.x), Mathf.RoundToInt(mousePosition.y), -5);
         transform.position = intMousePosition;
     }
 
