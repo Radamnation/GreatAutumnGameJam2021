@@ -105,11 +105,13 @@ public class Pumpkin : MonoBehaviour
     private void OnMouseDown()
     {
         mouseClicked = true;
+        FindObjectOfType<Player>().PlayingScratch = true;
     }
 
     private void OnMouseUp()
     {
         mouseClicked = false;
+        FindObjectOfType<Player>().PlayingScratch = false;
     }
 
     private void OnMouseOver()

@@ -70,7 +70,7 @@ public class NightButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        AudioSource.PlayClipAtPoint(clickSFX, Camera.main.transform.position);
+        FindObjectOfType<SFXManager>().PlayClick();
         //var nightButtons = FindObjectsOfType<NightButton>();
         //foreach (NightButton nightButton in nightButtons)
         //{

@@ -25,10 +25,12 @@ public class CancelMenu : MonoBehaviour
         switch (id)
         {
             case 0:
+                FindObjectOfType<SFXManager>().PlayClick();
                 FindObjectOfType<GameManager>().ResetCarving();
                 FindObjectOfType<GameManager>().CancelReset();
                 break;
             case 1:
+                FindObjectOfType<SFXManager>().PlayClick();
                 FindObjectOfType<GameManager>().CancelReset();
                 break;
         }

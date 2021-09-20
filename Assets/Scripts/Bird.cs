@@ -7,7 +7,7 @@ public class Bird : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,5 +25,10 @@ public class Bird : MonoBehaviour
     {
         FindObjectOfType<BirdRig>().FlipPosition();
         //FindObjectOfType<BirdRig>().ResetLandedTimer();
+    }
+
+    private void OnMouseDown()
+    {
+        FindObjectOfType<SFXManager>().PlayChirp();
     }
 }

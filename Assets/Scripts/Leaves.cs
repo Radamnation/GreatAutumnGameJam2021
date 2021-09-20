@@ -10,17 +10,20 @@ public class Leaves : MonoBehaviour
 
     private ParticleSystem myParticleSystem;
     private float leavesTimer;
+    private AudioSource myAudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         myParticleSystem = GetComponent<ParticleSystem>();
-        
+        myAudioSource = GetComponent<AudioSource>();
+
         myParticleSystem.Stop();
         var main = myParticleSystem.main;
         leavesTimer = Random.Range(minLeavesTime, maxLeavesTime);
         main.duration = leavesTimer;
         leavesTimer += timerOffset;
+        myAudioSource.volume = 2 * FindObjectOfType<SFXManager>().SFXVolume;
         myParticleSystem.Play();
     }
 
@@ -35,5 +38,6 @@ public class Leaves : MonoBehaviour
         {
             Destroy(transform.gameObject);
         }
+        myAudioSource.volume = 2 * FindObjectOfType<SFXManager>().SFXVolume;
     }
 }

@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject dayCancelMenu;
     [SerializeField] private GameObject nightCancelMenu;
 
+    [SerializeField] private GameObject dayVolumeMenu;
+    [SerializeField] private GameObject nightVolumeMenu;
+
     private CarvingTool currentCarvingTool = CarvingTool.NONE;
     [SerializeField] private bool nightMode = false;
 
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
     public bool NightMode { get => nightMode; set => nightMode = value; }
 
     [SerializeField] private GameObject cameraAim;
+    [SerializeField] private GameObject cameraUnavailable;
     [SerializeField] private GameObject cameraFlash;
     [SerializeField] private SpriteRenderer pictureTexture;
     [SerializeField] private RectTransform targetRect;
@@ -65,6 +69,7 @@ public class GameManager : MonoBehaviour
         dayCancelMenu.SetActive(false);
         nightCancelMenu.SetActive(false);
         cameraAim.SetActive(false);
+        cameraUnavailable.SetActive(false);
         myPlayer = FindObjectOfType<Player>();
         dayMusic = FindObjectOfType<MusicManager>().DayMusic;
         nightMusic = FindObjectOfType<MusicManager>().NightMusic;
@@ -79,6 +84,7 @@ public class GameManager : MonoBehaviour
     public void ShowCameraAim()
     {
         cameraAim.SetActive(true);
+        cameraAim.GetComponent<CameraAim>().UpdatePicture();
     }
 
     public void HideCameraAim()
@@ -88,7 +94,18 @@ public class GameManager : MonoBehaviour
 
     public void TakePicture()
     {
-        StartCoroutine(Capture());
+        if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            StartCoroutine(Capture());
+        }
+        else if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            cameraUnavailable.SetActive(true);
+            cameraUnavailable.GetComponent<CameraAim>().UpdatePicture();
+            Instantiate(cameraFlash);
+            // TO DO: need to add a screen that shows the text
+            // Debug.Log("Picture can only be taken on the Windows or MacOS desktop version. Download it and give it a try!");
+        }
     }
 
     private IEnumerator Capture()
@@ -222,7 +239,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FadeOutNight()
     {
-        currentDayVolume = 0.25f;
+        currentDayVolume = FindObjectOfType<MusicManager>().MusicVolume;
         targetDayVolume = 0f;
         dayMusicTimer = fadeTransitionTime;
         FindObjectOfType<Blackout>().MakeAppear(fadeTransitionTime);
@@ -250,6 +267,7 @@ public class GameManager : MonoBehaviour
         foreach (MenuButton menuButton in menuButtons)
         {
             menuButton.SwitchToNight();
+            menuButton.Reinitialize();
         }
         var nightButtons = FindObjectsOfType<NightButton>();
         foreach (NightButton nightButton in nightButtons)
@@ -262,7 +280,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator FadeInNight()
     {
         currentNightVolume = 0f;
-        targetNightVolume = 0.25f;
+        targetNightVolume = FindObjectOfType<MusicManager>().MusicVolume;
         nightMusicTimer = fadeTransitionTime;
         FindObjectOfType<Blackout>().MakeDisappear(fadeTransitionTime);
         menuButtons.MoveIn(fadeTransitionTime);
@@ -273,7 +291,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FadeOutDay()
     {
-        currentNightVolume = 0.25f;
+        currentNightVolume = FindObjectOfType<MusicManager>().MusicVolume;
         targetNightVolume = 0f;
         nightMusicTimer = fadeTransitionTime;
         FindObjectOfType<Blackout>().MakeAppear(fadeTransitionTime);
@@ -299,6 +317,7 @@ public class GameManager : MonoBehaviour
         foreach (MenuButton menuButton in menuButtons)
         {
             menuButton.SwitchToDay();
+            menuButton.Reinitialize();
         }
         var brushButtons = FindObjectsOfType<BrushButton>();
         foreach (BrushButton brushButton in brushButtons)
@@ -311,7 +330,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator FadeInDay()
     {
         currentDayVolume = 0f;
-        targetDayVolume = 0.25f;
+        targetDayVolume = FindObjectOfType<MusicManager>().MusicVolume;
         dayMusicTimer = fadeTransitionTime;
         FindObjectOfType<Blackout>().MakeDisappear(fadeTransitionTime);
         menuButtons.MoveIn(fadeTransitionTime);
@@ -332,33 +351,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CancelReset()
+    public void AskChangeMusicLevel()
     {
         if (!nightMode)
         {
-            dayCancelMenu.SetActive(false);
+            dayVolumeMenu.GetComponent<VolumeMenu>().Initialize();
+            dayVolumeMenu.SetActive(true);
         }
         else if (nightMode)
         {
-            nightCancelMenu.SetActive(false);
+            nightVolumeMenu.GetComponent<VolumeMenu>().Initialize();
+            nightVolumeMenu.SetActive(true);
         }
+    }
+
+    public void CancelReset()
+    {
+        dayCancelMenu.SetActive(false);
+        nightCancelMenu.SetActive(false);
     }
 
     public void ResetCarving()
     {
-        if (nightMode)
-        {
-            SwitchToDay();
-        }
+        BackToHomeScreen();
 
-        var brushButtons = FindObjectsOfType<BrushButton>();
-        foreach (BrushButton brushButton in brushButtons)
-        {
-            brushButton.Reinitialize();
-        }
-        currentCarvingTool = CarvingTool.NONE;
-        var currentBackground = FindObjectOfType<Background>();
-        Destroy(currentBackground.gameObject);
-        Instantiate(backgroundPrefab);
+        //if (nightMode)
+        //{
+        //    SwitchToDay();
+        //}
+
+        //var brushButtons = FindObjectsOfType<BrushButton>();
+        //foreach (BrushButton brushButton in brushButtons)
+        //{
+        //    brushButton.Reinitialize();
+        //}
+        //currentCarvingTool = CarvingTool.NONE;
+        //var currentBackground = FindObjectOfType<Background>();
+        //Destroy(currentBackground.gameObject);
+        //Instantiate(backgroundPrefab);
     }
 }

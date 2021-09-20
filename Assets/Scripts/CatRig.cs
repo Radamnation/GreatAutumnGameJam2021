@@ -18,6 +18,7 @@ public class CatRig : MonoBehaviour
     private float walkTimer;
     private float flickTimer;
     private float minimumTimer;
+    private Collider2D myCollider2D;
 
     private Animator catAnimator;
 
@@ -30,6 +31,9 @@ public class CatRig : MonoBehaviour
         catAnimator.SetBool("CatWalk", true);
         flickTimer = Random.Range(flickTimerMin, flickTimerMax);
         RandomCatDirection();
+        RandomCatPosition();
+        myCollider2D = GetComponentInChildren<Collider2D>();
+        myCollider2D.enabled = false;
     }
 
     // Update is called once per frame
@@ -44,6 +48,12 @@ public class CatRig : MonoBehaviour
     {
         var randomDirection = -1 + 2 * Random.Range(0, 2);
         transform.localScale = new Vector3(randomDirection, 1, 1);
+    }
+
+    private void RandomCatPosition()
+    {
+        var randomDirection = Random.Range(-16, 16);
+        transform.position = new Vector3(randomDirection, transform.position.y, transform.position.z);
     }
 
     private void Walking()
@@ -61,6 +71,7 @@ public class CatRig : MonoBehaviour
             walking = false;
             stopped = true;
             catAnimator.SetBool("CatWalk", false);
+            myCollider2D.enabled = true;
         }
     }
 
@@ -105,12 +116,15 @@ public class CatRig : MonoBehaviour
             case 6:
             case 7:
                 catAnimator.SetTrigger("CatFlick");
+                FindObjectOfType<SFXManager>().PlayCatFlick();
                 break;
             case 8:
             case 9:
                 stopped = false;
                 walkTimer = walkTime;
                 catAnimator.SetBool("CatWalk", true);
+                RandomCatDirection();
+                myCollider2D.enabled = false;
                 break;
         }
     }

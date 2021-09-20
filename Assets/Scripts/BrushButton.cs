@@ -70,7 +70,7 @@ public class BrushButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        AudioSource.PlayClipAtPoint(clickSFX, Camera.main.transform.position);
+        FindObjectOfType<SFXManager>().PlayClick();
         var brushButtons = FindObjectsOfType<BrushButton>();
         foreach (BrushButton brushButton in brushButtons)
         {

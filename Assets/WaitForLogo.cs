@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
-public class CameraAim : MonoBehaviour
+public class WaitForLogo : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,12 +15,9 @@ public class CameraAim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    private void OnMouseDown()
-    {
-        FindObjectOfType<GameManager>().TakePicture();
-        FindObjectOfType<GameManager>().HideCameraAim();
+        if (SplashScreen.isFinished)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }

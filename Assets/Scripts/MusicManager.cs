@@ -12,6 +12,7 @@ public class MusicManager : MonoBehaviour
 
     public AudioSource DayMusic { get => dayMusic; set => dayMusic = value; }
     public AudioSource NightMusic { get => nightMusic; set => nightMusic = value; }
+    public float MusicVolume { get => musicVolume; set => musicVolume = value; }
 
     private void Awake()
     {
@@ -26,9 +27,26 @@ public class MusicManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void UpdateMusicVolume()
+    {
+        if (!FindObjectOfType<GameManager>().NightMode)
+        {
+            dayMusic.volume = musicVolume;
+        }
+        else if (FindObjectOfType<GameManager>().NightMode)
+        {
+            nightMusic.volume = musicVolume;
+        }
+    }
+
     public void ResetMusic()
     {
-        Destroy(instance.gameObject);
+        dayMusic.Stop();
+        nightMusic.Stop();
+        dayMusic.volume = musicVolume;
+        nightMusic.volume = 0;
+        dayMusic.Play();
+        nightMusic.Play();
     }
 
     // Start is called before the first frame update

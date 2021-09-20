@@ -12,7 +12,7 @@ public class Flash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource.PlayClipAtPoint(myAudioClip, Camera.main.transform.position);
+        FindObjectOfType<SFXManager>().PlayFlash();
         lifeTimer = lifeTime;
     }
 

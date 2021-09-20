@@ -18,6 +18,7 @@ public class BirdRig : MonoBehaviour
     private float landingTimer;
     private float landedTimer;
     private float minimumTimer;
+    private Collider2D myCollider2D;
 
     private Animator birdAnimator;
 
@@ -30,6 +31,9 @@ public class BirdRig : MonoBehaviour
         birdAnimator.SetBool("BirdFly", true);
         landedTimer = Random.Range(landedTimerMin, landedTimerMax);
         RandomBirdDirection();
+        FindObjectOfType<SFXManager>().PlayBirdLand();
+        myCollider2D = GetComponentInChildren<Collider2D>();
+        myCollider2D.enabled = false;
     }
 
     // Update is called once per frame
@@ -61,6 +65,7 @@ public class BirdRig : MonoBehaviour
             landing = false;
             landed = true;
             birdAnimator.SetBool("BirdFly", false);
+            myCollider2D.enabled = true;
         }
     }
 
@@ -101,6 +106,7 @@ public class BirdRig : MonoBehaviour
             case 4:
             case 5:
                 birdAnimator.SetTrigger("BirdPeck");
+                FindObjectOfType<SFXManager>().PlayBirdPeck();
                 break;
             case 6:
             case 7:
@@ -111,6 +117,8 @@ public class BirdRig : MonoBehaviour
                 landed = false;
                 landingTimer = landingTime;
                 birdAnimator.SetBool("BirdFly", true);
+                FindObjectOfType<SFXManager>().PlayBirdTakeoff();
+                myCollider2D.enabled = false;
                 break;
         }
     }

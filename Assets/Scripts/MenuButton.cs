@@ -13,6 +13,7 @@ public class MenuButton : MonoBehaviour
     [SerializeField] private AudioClip clickSFX;
 
     private SpriteRenderer mySpriteRenderer;
+    private Vector3 initialPosition;
 
     private bool clicked = false;
 
@@ -20,6 +21,7 @@ public class MenuButton : MonoBehaviour
     void Start()
     {
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+        initialPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -30,7 +32,15 @@ public class MenuButton : MonoBehaviour
 
     public void Reinitialize()
     {
-        mySpriteRenderer.sprite = mySprites[0];
+        if (!FindObjectOfType<GameManager>().NightMode)
+        {
+            mySpriteRenderer.sprite = mySprites[1];
+        }
+        else if (FindObjectOfType<GameManager>().NightMode)
+        {
+            mySpriteRenderer.sprite = mySprites[0];
+        }
+        transform.localPosition = initialPosition;
         clicked = false;
     }
 
@@ -57,7 +67,14 @@ public class MenuButton : MonoBehaviour
 
     private void OnMouseExit()
     {
-        transform.position += offset;
+        if (clicked && id == 2)
+        {
+
+        }
+        else
+        {
+            transform.position += offset;
+        }
 
         var toolTip = FindObjectOfType<Player>().ToolTip;
         toolTip.enabled = false;
@@ -65,18 +82,13 @@ public class MenuButton : MonoBehaviour
 
     private void OnMouseDown()
     {
-        AudioSource.PlayClipAtPoint(clickSFX, Camera.main.transform.position);
-        //var menuButtons = FindObjectsOfType<MenuButton>();
-        //foreach (MenuButton menuButton in menuButtons)
-        //{
-        //    menuButton.Reinitialize();
-        //}
-        //mySpriteRenderer.sprite = mySprites[1];
-        //clicked = true;
+        FindObjectOfType<SFXManager>().PlayClick();
+        // mySpriteRenderer.sprite = mySprites[1];
+        clicked = true;
         switch (id)
         {
             case 0:
-                FindObjectOfType<GameManager>().BackToHomeScreen();
+                FindObjectOfType<GameManager>().AskChangeMusicLevel();
                 break;
             case 1:
                 FindObjectOfType<GameManager>().AskResetCarving();
@@ -88,7 +100,7 @@ public class MenuButton : MonoBehaviour
                 FindObjectOfType<GameManager>().ShowCameraAim();
                 break;
             case 4:
-                FindObjectOfType<HelpMenu>().StartHelpMenu();
+                FindObjectOfType<GameManager>().StartHelpMenu();
                 break;
         }
     }

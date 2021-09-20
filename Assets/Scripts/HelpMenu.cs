@@ -36,19 +36,22 @@ public class HelpMenu : MonoBehaviour
     {
         if (helpScreens[0].gameObject.activeSelf == true)
         {
+            FindObjectOfType<SFXManager>().PlayClick();
             helpScreens[0].gameObject.SetActive(false);
             helpScreens[1].gameObject.SetActive(true);
         }
         else if (helpScreens[1].gameObject.activeSelf == true)
         {
+            FindObjectOfType<SFXManager>().PlayClick();
             helpScreens[1].gameObject.SetActive(false);
             helpScreens[2].gameObject.SetActive(true);
         }
         else if (helpScreens[2].gameObject.activeSelf == true)
         {
+            FindObjectOfType<SFXManager>().PlayClick();
             helpScreens[2].gameObject.SetActive(false);
             myCollider2D.enabled = false;
-            // FindObjectOfType<GameManager>().EndHelpMenu();
+            FindObjectOfType<GameManager>().EndHelpMenu();
         }
     }
 }
