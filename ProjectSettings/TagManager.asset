@@ -50,3 +50,6 @@ TagManager:
   - name: Player
     uniqueID: 1354570977
     locked: 0
+  - name: Blackout
+    uniqueID: 2123932835
+    locked: 0

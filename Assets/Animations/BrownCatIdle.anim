@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CatStand
+  m_Name: BrownCatIdle
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,7 +20,7 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 4785180388622165704, guid: 07590175053128240b2bb860168b48f7, type: 3}
+      value: {fileID: -8506829531710062949, guid: 2a8a0be21c72a1e42a5bd5e2638e47ae, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -40,7 +40,7 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 4785180388622165704, guid: 07590175053128240b2bb860168b48f7, type: 3}
+    - {fileID: -8506829531710062949, guid: 2a8a0be21c72a1e42a5bd5e2638e47ae, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

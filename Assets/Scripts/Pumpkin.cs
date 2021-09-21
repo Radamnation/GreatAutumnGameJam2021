@@ -16,6 +16,8 @@ public class Pumpkin : MonoBehaviour
     [SerializeField] private Tilemap emptyShellTilemap;
     [SerializeField] private Tile[] emptyShellColor;
 
+    [SerializeField] private GameObject myShadow;
+
     private bool mouseClicked = false;
 
     public bool MouseClicked { get => mouseClicked; set => mouseClicked = value; }
@@ -25,7 +27,7 @@ public class Pumpkin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        myShadow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -67,6 +69,7 @@ public class Pumpkin : MonoBehaviour
         hardShellTilemap.SwapTile(hardShellColor[2], hardShellColor[0]);
         softShellTilemap.SwapTile(softShellColor[2], softShellColor[0]);
         emptyShellTilemap.SwapTile(emptyShellColor[2], emptyShellColor[0]);
+        myShadow.SetActive(false);
     }
 
     public void SwitchToNight()
@@ -83,6 +86,7 @@ public class Pumpkin : MonoBehaviour
         hardShellTilemap.SwapTile(hardShellColor[2], hardShellColor[1]);
         softShellTilemap.SwapTile(softShellColor[2], softShellColor[1]);
         emptyShellTilemap.SwapTile(emptyShellColor[2], emptyShellColor[1]);
+        myShadow.SetActive(true);
     }
 
     public void SwitchCandleOff()
@@ -90,6 +94,7 @@ public class Pumpkin : MonoBehaviour
         hardShellTilemap.SwapTile(hardShellColor[1], hardShellColor[2]);
         softShellTilemap.SwapTile(softShellColor[1], softShellColor[2]);
         emptyShellTilemap.SwapTile(emptyShellColor[1], emptyShellColor[2]);
+        myShadow.SetActive(false);
     }
 
     public void SwitchBlacklightOn()

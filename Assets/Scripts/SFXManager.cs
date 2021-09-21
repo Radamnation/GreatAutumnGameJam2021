@@ -17,6 +17,8 @@ public class SFXManager : MonoBehaviour
     [SerializeField] private AudioClip birdPeckSFX;
     [SerializeField] private AudioClip catFlickSFX;
     [SerializeField] private AudioClip catStepSFX;
+    [SerializeField] private AudioClip owlFlapSFX;
+    [SerializeField] private AudioClip owlSFX;
 
     [SerializeField] private AudioSource environnementAudioSource;
     [SerializeField] private AudioSource playerAudioSource;
@@ -55,7 +57,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume;
         playerAudioSource.clip = (scratchSFX[Random.Range(0, scratchSFX.Length)]);
         playerAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayMarker()
@@ -63,7 +68,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume;
         playerAudioSource.clip = (markerSFX[Random.Range(0, markerSFX.Length)]);
         playerAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayEraser()
@@ -71,7 +79,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume * 0.5f;
         playerAudioSource.clip = (eraserSFX[Random.Range(0, eraserSFX.Length)]);
         playerAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
 
     }
 
@@ -80,7 +91,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume;
         playerAudioSource.clip = clickSFX;
         playerAudioSource.pitch = 1;
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayMeow()
@@ -88,7 +102,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume * 0.25f;
         playerAudioSource.clip = catMeowSFX;
         playerAudioSource.pitch = 1;
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayChirp()
@@ -96,7 +113,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume * 0.75f;
         playerAudioSource.clip = chirpSFX;
         playerAudioSource.pitch = 1;
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayFlash()
@@ -104,7 +124,10 @@ public class SFXManager : MonoBehaviour
         playerAudioSource.volume = sfxVolume;
         playerAudioSource.clip = flashSFX;
         playerAudioSource.pitch = 1;
-        playerAudioSource.Play();
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 
     public void PlayBirdLand()
@@ -112,7 +135,10 @@ public class SFXManager : MonoBehaviour
         environnementAudioSource.volume = sfxVolume;
         environnementAudioSource.clip = birdLandSFX;
         environnementAudioSource.pitch = 1;
-        environnementAudioSource.Play();
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
     }
 
     public void PlayBirdTakeoff()
@@ -120,7 +146,10 @@ public class SFXManager : MonoBehaviour
         environnementAudioSource.volume = sfxVolume;
         environnementAudioSource.clip = birdTakeoffSFX;
         environnementAudioSource.pitch = 1;
-        environnementAudioSource.Play();
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
     }
 
     public void PlayBirdPeck()
@@ -128,7 +157,10 @@ public class SFXManager : MonoBehaviour
         environnementAudioSource.volume = sfxVolume;
         environnementAudioSource.clip = birdPeckSFX;
         environnementAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        environnementAudioSource.Play();
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
     }
 
     public void PlayCatFlick()
@@ -136,7 +168,10 @@ public class SFXManager : MonoBehaviour
         environnementAudioSource.volume = sfxVolume;
         environnementAudioSource.clip = catFlickSFX;
         environnementAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        environnementAudioSource.Play();
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
     }
 
     public void PlayCatWalk()
@@ -144,6 +179,31 @@ public class SFXManager : MonoBehaviour
         environnementAudioSource.volume = sfxVolume * 0.25f;
         environnementAudioSource.clip = catStepSFX;
         environnementAudioSource.pitch = 1;
-        environnementAudioSource.Play();
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
+    }
+
+    public void PlayOwlFlap()
+    {
+        environnementAudioSource.volume = sfxVolume * 0.25f;
+        environnementAudioSource.clip = owlFlapSFX;
+        environnementAudioSource.pitch = 1;
+        if (environnementAudioSource.isActiveAndEnabled)
+        {
+            environnementAudioSource.Play();
+        }
+    }
+
+    public void PlayOwl()
+    {
+        playerAudioSource.volume = sfxVolume * 0.5f; ;
+        playerAudioSource.clip = owlSFX;
+        playerAudioSource.pitch = 1;
+        if (playerAudioSource.isActiveAndEnabled)
+        {
+            playerAudioSource.Play();
+        }
     }
 }

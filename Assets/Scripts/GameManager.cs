@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject dayVolumeMenu;
     [SerializeField] private GameObject nightVolumeMenu;
 
+    private Owl myOwl;
+
     private CarvingTool currentCarvingTool = CarvingTool.NONE;
     [SerializeField] private bool nightMode = false;
 
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myOwl = FindObjectOfType<Owl>();
+        myOwl.gameObject.SetActive(false);
         Cursor.visible = false;
         // screencap = ScreenCapture.CaptureScreenshotAsTexture();
         pictureFrame.SetActive(false);
@@ -78,6 +82,15 @@ public class GameManager : MonoBehaviour
     public void BackToHomeScreen()
     {
         FindObjectOfType<MusicManager>().ResetMusic();
+        FindObjectOfType<BigBlackout>().MakeAppear();
+        StartCoroutine(NextScene());
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public IEnumerator NextScene()
+    {
+        yield return new WaitForSeconds(1.25f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
@@ -257,6 +270,7 @@ public class GameManager : MonoBehaviour
     {
         // dayMenu.transform.position += menuOffset;
         // nightMenu.transform.position -= menuOffset;
+        myOwl.gameObject.SetActive(true);
 
         dayEvents.StopEvents();
         nightEvents.StartEvents();
@@ -306,6 +320,7 @@ public class GameManager : MonoBehaviour
 
     private void SwitchToDay()
     {
+        myOwl.gameObject.SetActive(false);
         // dayMenu.transform.position -= menuOffset;
         // nightMenu.transform.position += menuOffset;
         nightEvents.StopEvents();

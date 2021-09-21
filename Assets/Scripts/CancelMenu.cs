@@ -27,7 +27,6 @@ public class CancelMenu : MonoBehaviour
             case 0:
                 FindObjectOfType<SFXManager>().PlayClick();
                 FindObjectOfType<GameManager>().ResetCarving();
-                FindObjectOfType<GameManager>().CancelReset();
                 break;
             case 1:
                 FindObjectOfType<SFXManager>().PlayClick();

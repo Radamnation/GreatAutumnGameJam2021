@@ -12,10 +12,12 @@ public class IntroAnimation : MonoBehaviour
 
     private bool startCarving = false;
     private float timeIntervalTimer;
+    private bool coroutineStarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
         timeIntervalTimer = timeInterval;
         StartCoroutine(StartIntro());
     }
@@ -54,9 +56,10 @@ public class IntroAnimation : MonoBehaviour
                     introBack.transform.localPosition = tempPosition;
                     timeIntervalTimer = timeInterval;
                 }
-                else
+                else if (!coroutineStarted)
                 {
                     StartCoroutine(SwitchScene());
+                    coroutineStarted = true;
                 }
             }
         }
@@ -67,18 +70,22 @@ public class IntroAnimation : MonoBehaviour
         FindObjectOfType<Player>().PlayingScratch = false;
         FindObjectOfType<Player>().InCarvingZone = false;
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(initialWait);
 
-        NextScene();
+        FindObjectOfType<BigBlackout>().MakeAppear();
+        StartCoroutine(NextScene());
     }
 
-    private void NextScene()
+    public IEnumerator NextScene()
     {
+        yield return new WaitForSeconds(1.25f);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnMouseDown()
     {
-        NextScene();
+        FindObjectOfType<BigBlackout>().MakeAppear();
+        StartCoroutine(NextScene());
     }
 }
