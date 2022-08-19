@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class WaitForLogo : MonoBehaviour
 {
+    private bool readyToStart = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,14 @@ public class WaitForLogo : MonoBehaviour
     {
         if (SplashScreen.isFinished)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            readyToStart = true;
+            Cursor.visible = true;
         }
+    }
+
+    public void StartGame()
+    {
+        if (readyToStart)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
