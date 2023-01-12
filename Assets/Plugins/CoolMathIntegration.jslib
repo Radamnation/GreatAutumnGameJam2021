@@ -2,9 +2,9 @@ mergeInto(LibraryManager.library, {
 
 	RedirectTo : function () {
 		if ( parent !== undefined && parent !== null )
-			parent .document.location = "https://www.coolmathgames.com";
+			parent.document.location = "https://www.coolmathgames.com";
 		else
-			document .location = "https://www.coolmathgames.com";
+			document.location = "https://www.coolmathgames.com";
 	},
 	
 	StartGameEvent : function () {

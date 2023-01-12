@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,9 @@ public enum CarvingTool { NONE, PEN, ERASER, RAZOR, KNIFE, SAW}
 
 public class GameManager : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void ReplayEvent(int level);
+
     [SerializeField] private Background backgroundPrefab;
     [SerializeField] private GameObject dayMenu;
     [SerializeField] private GameObject nightMenu;
@@ -388,21 +392,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetCarving()
     {
+        ReplayEvent(0);
         BackToHomeScreen();
-
-        //if (nightMode)
-        //{
-        //    SwitchToDay();
-        //}
-
-        //var brushButtons = FindObjectsOfType<BrushButton>();
-        //foreach (BrushButton brushButton in brushButtons)
-        //{
-        //    brushButton.Reinitialize();
-        //}
-        //currentCarvingTool = CarvingTool.NONE;
-        //var currentBackground = FindObjectOfType<Background>();
-        //Destroy(currentBackground.gameObject);
-        //Instantiate(backgroundPrefab);
     }
 }
